@@ -24,4 +24,33 @@
     }
 )
 
+;; Policy Holder Mapping
+(define-map policy-holders
+    {
+        pool-id: uint,
+        holder: principal
+    }
+    {
+        coverage-amount: uint,
+        premium-paid: uint,
+        claim-status: (string-ascii 20)
+    }
+)
+
+;; Claims Mapping
+(define-map claims
+    {
+        pool-id: uint,
+        claim-id: uint
+    }
+    {
+        claimant: principal,
+        claim-amount: uint,
+        claim-timestamp: uint,
+        approved: bool,
+        resolved: bool
+    }
+)
+
+
 

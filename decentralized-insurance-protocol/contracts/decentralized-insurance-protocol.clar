@@ -52,5 +52,48 @@
     }
 )
 
+;; Purchase insurance policy
+(define-public (purchase-policy
+    (pool-id uint)
+    (coverage-amount uint)
+)
+    (begin
+        ;; Validate pool exists and is active
+        (let 
+            (
+                (pool (unwrap! 
+                    (map-get? insurance-pools 
+                        {
+                            pool-id: pool-id,
+                            insurance-type: "default"
+                        }
+                    ) 
+                    ERR-INVALID-CLAIM)
+                )
+                (premium (/ (* coverage-amount (get premium-rate pool)) u100))
+            )
+            
+            ;; Ensure pool is active and coverage is within limits
+            (asserts! (get active pool) ERR-POOL-CLOSED)
+            (asserts! (<= coverage-amount (get max-coverage pool)) ERR-UNAUTHORIZED)
+            
+            ;; Record policy holder
+            (map-set policy-holders 
+                {
+                    pool-id: pool-id,
+                    holder: tx-sender
+                }
+                {
+                    coverage-amount: coverage-amount,
+                    premium-paid: premium,
+                    claim-status: "active"
+                }
+            )
+            
+            (ok true)
+        )
+    )
+)
+
 
 

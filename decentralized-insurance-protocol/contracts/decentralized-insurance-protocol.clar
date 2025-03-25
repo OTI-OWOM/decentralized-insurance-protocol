@@ -9,6 +9,11 @@
 (define-constant ERR-INVALID-CLAIM (err u3))
 (define-constant ERR-POOL-CLOSED (err u4))
 (define-constant ERR-ALREADY-CLAIMED (err u5))
+(define-constant ERR-INSUFFICIENT-LIQUIDITY (err u6))
+(define-constant ERR-CLAIM-NOT-APPROVED (err u7))
+
+;; Governance Token
+(define-fungible-token INSURANCE-GOVERNANCE-TOKEN u1000000)
 
 ;; Insurance Pool Storage
 (define-map insurance-pools
@@ -21,6 +26,7 @@
         premium-rate: uint,
         max-coverage: uint,
         active: bool
+        
     }
 )
 
@@ -162,5 +168,17 @@
     )
 )
 
+;; New: Liquidity Provider Mapping
+(define-map liquidity-providers
+    {
+        pool-id: uint,
+        provider: principal
+    }
+    {
+        liquidity-amount: uint,
+        shares-minted: uint,
+        last-deposit-time: uint
+    }
+)
 
 

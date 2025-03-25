@@ -95,5 +95,44 @@
     )
 )
 
+;; Approve claim (only contract owner)
+(define-public (approve-claim
+    (pool-id uint)
+    (claim-id uint)
+)
+    (begin
+        (asserts! (is-eq tx-sender CONTRACT-OWNER) ERR-UNAUTHORIZED)
+        
+        (let 
+            (
+                (claim (unwrap! 
+                    (map-get? claims 
+                        {
+                            pool-id: pool-id,
+                            claim-id: claim-id
+                        }
+                    ) 
+                    ERR-INVALID-CLAIM)
+                )
+            )
+            
+            ;; Update claim status
+            (map-set claims 
+                {
+                    pool-id: pool-id,
+                    claim-id: claim-id
+                }
+                (merge claim {
+                    approved: true,
+                    resolved: true
+                })
+            )
+            
+            (ok true)
+        )
+    )
+)
+
+
 
 

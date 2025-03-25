@@ -133,6 +133,34 @@
     )
 )
 
+;; Helper read-only functions
+(define-read-only (get-last-pool-id)
+    (ok u0)
+)
+
+(define-read-only (get-last-claim-id)
+    (ok u0)
+)
+
+;; Get pool details
+(define-read-only (get-pool-details (pool-id uint))
+    (map-get? insurance-pools 
+        {
+            pool-id: pool-id,
+            insurance-type: "default"
+        }
+    )
+)
+
+;; Get policy details
+(define-read-only (get-policy-details (pool-id uint) (holder principal))
+    (map-get? policy-holders 
+        {
+            pool-id: pool-id,
+            holder: holder
+        }
+    )
+)
 
 
 

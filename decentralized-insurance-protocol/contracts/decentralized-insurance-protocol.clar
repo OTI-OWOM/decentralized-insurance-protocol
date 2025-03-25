@@ -168,17 +168,17 @@
     )
 )
 
-;; New: Liquidity Provider Mapping
-(define-map liquidity-providers
-    {
-        pool-id: uint,
-        provider: principal
-    }
-    {
-        liquidity-amount: uint,
-        shares-minted: uint,
-        last-deposit-time: uint
-    }
+
+;; New: Governance Token Distribution
+(define-public (distribute-governance-tokens
+    (pool-id uint)
+    (recipient principal)
+    (amount uint)
+)
+    (begin
+        (asserts! (is-eq tx-sender CONTRACT-OWNER) ERR-UNAUTHORIZED)
+        (ft-mint? INSURANCE-GOVERNANCE-TOKEN amount recipient)
+    )
 )
 
 

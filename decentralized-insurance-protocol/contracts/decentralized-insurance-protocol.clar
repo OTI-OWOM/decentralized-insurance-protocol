@@ -194,6 +194,24 @@
     }
 )
 
+(define-constant ERR-INSUFFICIENT-STAKE (err u8))
+(define-constant ERR-INVALID-PROPOSAL (err u9))
+(define-constant ERR-DISPUTE-FAILED (err u10))
 
+(define-fungible-token INSURANCE-STAKE-TOKEN u500000)
+
+(define-map governance-proposals
+    {
+        proposal-id: uint,
+        proposer: principal
+    }
+    {
+        proposal-type: (string-ascii 32),
+        description: (string-ascii 200),
+        votes-for: uint,
+        votes-against: uint,
+        executed: bool
+    }
+)
 
 

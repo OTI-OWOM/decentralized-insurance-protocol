@@ -214,4 +214,15 @@
     }
 )
 
+(define-map liquidity-providers
+    {
+        pool-id: uint,
+        provider: principal
+    }
+    {
+        total-liquidity: uint,
+        rewards-earned: uint,
+        last-deposit-timestamp: uint
+    }
+)
 

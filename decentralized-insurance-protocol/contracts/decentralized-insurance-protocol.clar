@@ -169,7 +169,7 @@
 )
 
 
-;; New: Governance Token Distribution
+;; Governance Token Distribution
 (define-public (distribute-governance-tokens
     (pool-id uint)
     (recipient principal)
@@ -180,5 +180,20 @@
         (ft-mint? INSURANCE-GOVERNANCE-TOKEN amount recipient)
     )
 )
+
+;; Claim Rating Mapping
+(define-map claim-ratings
+    {
+        pool-id: uint,
+        claim-id: uint,
+        voter: principal
+    }
+    {
+        rating: uint,
+        voted: bool
+    }
+)
+
+
 
 
